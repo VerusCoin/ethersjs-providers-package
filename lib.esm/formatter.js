@@ -35,7 +35,7 @@ export class Formatter {
             to: Formatter.allowNull(address, null),
             value: bigNumber,
             nonce: number,
-            data: data,
+            data: Formatter.allowNull(data, null),
             r: Formatter.allowNull(this.uint256),
             s: Formatter.allowNull(this.uint256),
             v: Formatter.allowNull(number),
@@ -239,7 +239,7 @@ export class Formatter {
             transaction.to = "0x0000000000000000000000000000000000000000";
         }
         // Rename input to data
-        if (transaction.input != null && transaction.data == null) {
+        if (transaction.input != null && transaction.data == null && transaction.input !== 'deprecated') {
             transaction.data = transaction.input;
         }
         // If to and creates are empty, populate the creates from the transaction

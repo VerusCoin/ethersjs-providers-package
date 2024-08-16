@@ -64,7 +64,7 @@ export class Formatter {
             to: Formatter.allowNull(address, null),
             value: bigNumber,
             nonce: number,
-            data: data,
+            data: Formatter.allowNull(data, null),
 
             r: Formatter.allowNull(this.uint256),
             s: Formatter.allowNull(this.uint256),
@@ -297,7 +297,7 @@ export class Formatter {
         }
 
         // Rename input to data
-        if (transaction.input != null && transaction.data == null) {
+        if (transaction.input != null && transaction.data == null && transaction.input !== 'deprecated') {
             transaction.data = transaction.input;
         }
 

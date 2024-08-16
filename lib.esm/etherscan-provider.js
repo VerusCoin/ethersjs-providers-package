@@ -301,7 +301,7 @@ export class EtherscanProvider extends BaseProvider {
         });
     }
     // @TODO: Allow startBlock and endBlock to be Promises
-    getHistory(addressOrName, startBlock, endBlock) {
+    getHistory(addressOrName, startBlock, endBlock, contractAddress) {
         let url = this.baseUrl;
         let apiKey = "";
         if (this.apiKey) {
@@ -314,7 +314,7 @@ export class EtherscanProvider extends BaseProvider {
             endBlock = 99999999;
         }
         return this.resolveName(addressOrName).then((address) => {
-            url += "/api?module=account&action=txlist&address=" + address;
+            url += `/api?module=account&action=${contractAddress == null ? 'txlist' : 'tokentx'}&address=` + address;
             url += "&startblock=" + startBlock;
             url += "&endblock=" + endBlock;
             url += "&sort=asc" + apiKey;

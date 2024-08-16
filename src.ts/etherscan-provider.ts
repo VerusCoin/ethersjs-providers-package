@@ -328,7 +328,7 @@ export class EtherscanProvider extends BaseProvider{
     }
 
     // @TODO: Allow startBlock and endBlock to be Promises
-    getHistory(addressOrName: string | Promise<string>, startBlock?: BlockTag, endBlock?: BlockTag): Promise<Array<TransactionResponse>> {
+    getHistory(addressOrName: string | Promise<string>, startBlock?: BlockTag, endBlock?: BlockTag, contractAddress?: string): Promise<Array<TransactionResponse>> {
 
         let url = this.baseUrl;
 
@@ -339,7 +339,7 @@ export class EtherscanProvider extends BaseProvider{
         if (endBlock == null) { endBlock = 99999999; }
 
         return this.resolveName(addressOrName).then((address) => {
-            url += "/api?module=account&action=txlist&address=" + address;
+            url += `/api?module=account&action=${contractAddress == null ? 'txlist' : 'tokentx'}&address=` + address;
             url += "&startblock=" + startBlock;
             url += "&endblock=" + endBlock;
             url += "&sort=asc" + apiKey;
